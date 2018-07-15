@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+        crossorigin="anonymous">
+        <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">Rock, Paper, Scissors</h1>
+        <div id="signin">
+            <form id="sign-in">
+                <div class="form-group row">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name">
+                </div>
+                <div class="form-group row">
+                    <input type="submit" value="submit">
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-7"></div>
+            <div class="col-5"><div class="row">
+                <p class="col-4">Wins: <span id="wins">0</span></p>
+                <p class="col-4">Ties: <span id="ties">0</span></p>
+                <p class="col-4">Losses: <span id="losses">0</span></p>
+            </div></div>
+        </div>
+        <div class="row">
+            <p class="col-4" id="name"></p>
+            <p class="col-4" id="opponent"></p>
+            <p class="col-4" id="wait-text"></p>
+        </div>
+        <div class="row" id="choices">
+
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+    <script src="assets/javascript/app.js"></script>
+</body>
+
+</html>
