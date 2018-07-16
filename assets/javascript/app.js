@@ -1,5 +1,12 @@
 // Initialize Firebase
-// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyB4uxXfEPiwWiqdp6pE1XhLtxPLTH0HrPM",
+    authDomain: "rock-paper-scissors-eaefa.firebaseapp.com",
+    databaseURL: "https://rock-paper-scissors-eaefa.firebaseio.com",
+    projectId: "rock-paper-scissors-eaefa",
+    storageBucket: "rock-paper-scissors-eaefa.appspot.com",
+    messagingSenderId: "720021713997"
+};
 
 firebase.initializeApp(config);
 var wins = 0;
@@ -107,7 +114,7 @@ $("#signin").on("submit", function (e) {
 
 // make a function that compares answers
 function compareAnswers() {
-    if (localPlayer.currentChoice === 0 && opponentChoice === 3)
+    if (localPlayer.currentChoice === 0 && opponentChoice === 2)
     {
         win()
     }else if(localPlayer.currentChoice> opponentChoice){
