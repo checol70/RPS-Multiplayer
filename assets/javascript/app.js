@@ -1,3 +1,7 @@
+//there is a bug where reset() is called multiple times on player2, I cannot figure it out in the time I have.
+// also with that bug player 2 has a bug where it will read that the opponent is waiting for you.
+
+
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyB4uxXfEPiwWiqdp6pE1XhLtxPLTH0HrPM",
@@ -47,22 +51,20 @@ player1.on("value", function (s) {
     if (localPlayer.playerNumber === 2) {
         $("#opponent").text("Your opponent is " + s.val().name)
         opponentChoice = s.val().currentChoice
-        if(localPlayer.currentChoice !=="")
-        {
+        if (localPlayer.currentChoice !== "") {
             compareAnswers();
         }
-        else{
+        else {
             $("#wait-text").text("opponent is waiting for you")
         }
     }
 })
 player2.on("value", function (s) {
-    if(localPlayer.playerNumber ===1){
+    if (localPlayer.playerNumber === 1) {
         $("#opponent").text("Your opponent is " + s.val().name)
         opponentChoice = s.val().currentChoice
         console.log("Opponent choice =", opponentChoice)
-        if(localPlayer.currentChoice !=="")
-        {
+        if (localPlayer.currentChoice !== "") {
             compareAnswers();
         }
     }
@@ -114,61 +116,63 @@ $("#signin").on("submit", function (e) {
 
 // make a function that compares answers
 function compareAnswers() {
-    if (localPlayer.currentChoice === 0 && opponentChoice === 2)
-    {
-        win()
-    }else if(localPlayer.currentChoice> opponentChoice){
-        win()
-    }
-    else if(localPlayer.currentChoice=== opponentChoice){
-        tie()
-    }
-    else{
-        lose()
+    if (localPlayer.currentChoice !== "") {
+        if (localPlayer.currentChoice === 0 && opponentChoice === 2) {
+            win()
+        } else if (localPlayer.currentChoice > opponentChoice) {
+            win()
+        }
+        else if (localPlayer.currentChoice === opponentChoice) {
+            tie()
+        }
+        else {
+            lose()
+        }
+        localPlayer.currentChoice = "";
     }
 }
-function win(){
+function win() {
     wins++
     $("#wins").text(wins)
     $("#result").text("You won!");
-    setTimeout(function(){
+    setTimeout(function () {
         reset()
     }, 2000)
 }
-function tie(){
+function tie() {
     ties++
     $("#ties").text(ties)
     $("#result").text("You tied!");
-    setTimeout(function(){
+    setTimeout(function () {
         reset()
     }, 2000)
 }
-function lose(){
+function lose() {
     losses++
     $("#losses").text(losses)
     $("#result").text("You lost!");
-    setTimeout(function(){
+    setTimeout(function () {
         reset()
     }, 2000)
 }
 
-function reset(){
+function reset() {
     localPlayer.currentChoice = "";
     console.log("resetting")
     $("#wait-text").text("")
-    if(localPlayer.playerNumber === 1){
+    if (localPlayer.playerNumber === 1) {
         player1.set({
             assigned: true,
             name: localPlayer.name,
             currentChoice: ""
         })
     }
-    else{
+    else {
         player2.set({
             assigned: true,
             name: localPlayer.name,
             currentChoice: ""
-        }) 
+        })
     }
 }
 
@@ -195,9 +199,9 @@ $(document).on("click", ".choice", function (e) {
         else {
             console.log("playerNumber out of bounds")
         }
-        if(opponentChoice!==""){
+        if (opponentChoice !== "") {
             compareAnswers()
-        }else{
+        } else {
             $("#wait-text").text("Waiting for opponent")
         }
     }
