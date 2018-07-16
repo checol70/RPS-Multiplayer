@@ -154,6 +154,7 @@ function lose(){
 
 function reset(){
     localPlayer.currentChoice = "";
+    console.log("resetting")
     $("#wait-text").text("")
     if(localPlayer.playerNumber === 1){
         player1.set({
