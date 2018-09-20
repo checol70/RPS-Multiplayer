@@ -11,7 +11,7 @@ var config = {
     storageBucket: "rock-paper-scissors-eaefa.appspot.com",
     messagingSenderId: "720021713997"
 };
-var reset =true;
+var hasBeenReset =true;
 firebase.initializeApp(config);
 var wins = 0;
 var losses = 0;
@@ -51,7 +51,7 @@ player1.on("value", function (s) {
     if (localPlayer.playerNumber === 2) {
         $("#opponent").text("Your opponent is " + s.val().name)
         opponentChoice = s.val().currentChoice
-        if(reset){
+        if(hasBeenReset){
             if (localPlayer.currentChoice !== "") {
                 compareAnswers();
                 $("#wait-text").text("")
@@ -61,7 +61,7 @@ player1.on("value", function (s) {
             }
         }
         else{
-            reset=true;
+            hasBeenReset=true;
         }
     }
 })
@@ -69,7 +69,7 @@ player2.on("value", function (s) {
     if (localPlayer.playerNumber === 1) {
         $("#opponent").text("Your opponent is " + s.val().name)
         opponentChoice = s.val().currentChoice
-        if(reset){
+        if(hasBeenReset){
             if (localPlayer.currentChoice !== "") {
                 compareAnswers();
                 $("#wait-text").text("")
@@ -78,8 +78,8 @@ player2.on("value", function (s) {
                 $("#wait-text").text("opponent is waiting for you")
             }
         } else {
-            console.log("resetting");
-            reset = true;
+            console.log("HasBeenReset");
+            hasBeenReset = true;
         }
     }
 })
@@ -132,7 +132,7 @@ $("#signin").on("submit", function (e) {
 
 // make a function that compares answers
 function compareAnswers() {
-    if(reset)
+    if(hasBeenReset)
     if (localPlayer.currentChoice !== "") {
         if (localPlayer.currentChoice === 0 && opponentChoice === 2) {
             win()
@@ -146,7 +146,7 @@ function compareAnswers() {
             lose()
         }
         localPlayer.currentChoice = "";
-        reset = false;
+        hasBeenReset = false;
     }
 }
 function win() {
