@@ -11,6 +11,7 @@ var config = {
     storageBucket: "rock-paper-scissors-eaefa.appspot.com",
     messagingSenderId: "720021713997"
 };
+//this will prevent having the game progress without both players choosing
 var hasBeenReset =true;
 firebase.initializeApp(config);
 var wins = 0;
@@ -38,11 +39,9 @@ var localPlayer = {
     playerNumber: 0
 }
 player1AssignedRef.on("value", function (s) {
-    console.log(s.val())
     player1Assigned = s.val()
 })
 player2AssignedRef.on("value", function (s) {
-    console.log(s.val())
     player2Assigned = s.val()
 })
 
@@ -59,9 +58,17 @@ player1.on("value", function (s) {
             else {
                 $("#wait-text").text("opponent is waiting for you")
             }
+        }else{
+            hasBeenReset = true;
         }
-        else{
-            hasBeenReset=true;
+    } else {
+        if(s.val().name != localPlayer.name){
+            if(s.val().name !== ""){
+                $("#opponent").text("Your opponent is " + s.val().name)
+            }else{
+                $("#opponent").text("")
+            }
+
         }
     }
 })
@@ -78,16 +85,22 @@ player2.on("value", function (s) {
                 $("#wait-text").text("opponent is waiting for you")
             }
         } else {
-            console.log("HasBeenReset");
             hasBeenReset = true;
+        }
+    } else {
+        if(s.val().name != localPlayer.name){
+            if(s.val().name !== ""){
+                $("#opponent").text("Your opponent is " + s.val().name)
+            }else{
+                $("#opponent").text("")
+            }
+
         }
     }
 })
 $("#signin").on("submit", function (e) {
     e.preventDefault();
-    console.log("started")
     localPlayer.name = $("#name").val().trim();
-    console.log(localPlayer.name)
 
 
     if (!player1Assigned) {
@@ -153,30 +166,23 @@ function win() {
     wins++
     $("#wins").text(wins)
     $("#result").text("You won!");
-    setTimeout(function () {
-        reset()
-    }, 2000)
+    reset();
 }
 function tie() {
     ties++
     $("#ties").text(ties)
     $("#result").text("You tied!");
-    setTimeout(function () {
-        reset()
-    }, 2000)
+    reset();
 }
 function lose() {
     losses++
     $("#losses").text(losses)
     $("#result").text("You lost!");
-    setTimeout(function () {
-        reset()
-    }, 2000)
+    reset()
 }
 
 function reset() {
     localPlayer.currentChoice = "";
-    console.log("resetting")
     $("#wait-text").text("")
     if (localPlayer.playerNumber === 1) {
         player1.set({
@@ -213,9 +219,6 @@ $(document).on("click", ".choice", function (e) {
             var choice = $(this).attr("data-choice")
             localPlayer.currentChoice = choice;
             db.ref("/players/player2/currentChoice").set(choice);
-        }
-        else {
-            console.log("playerNumber out of bounds")
         }
         if (opponentChoice !== "") {
             compareAnswers()
