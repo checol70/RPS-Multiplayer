@@ -11,7 +11,7 @@ var config = {
     storageBucket: "rock-paper-scissors-eaefa.appspot.com",
     messagingSenderId: "720021713997"
 };
-
+var reset =true;
 firebase.initializeApp(config);
 var wins = 0;
 var losses = 0;
@@ -51,11 +51,16 @@ player1.on("value", function (s) {
     if (localPlayer.playerNumber === 2) {
         $("#opponent").text("Your opponent is " + s.val().name)
         opponentChoice = s.val().currentChoice
-        if (localPlayer.currentChoice !== "") {
-            compareAnswers();
+        if(reset){
+            if (localPlayer.currentChoice !== "") {
+                compareAnswers();
+            }
+            else {
+                $("#wait-text").text("opponent is waiting for you")
+            }
         }
-        else {
-            $("#wait-text").text("opponent is waiting for you")
+        else{
+            reset=true;
         }
     }
 })
@@ -63,9 +68,15 @@ player2.on("value", function (s) {
     if (localPlayer.playerNumber === 1) {
         $("#opponent").text("Your opponent is " + s.val().name)
         opponentChoice = s.val().currentChoice
-        console.log("Opponent choice =", opponentChoice)
-        if (localPlayer.currentChoice !== "") {
-            compareAnswers();
+        if(reset){
+            if (localPlayer.currentChoice !== "") {
+                compareAnswers();
+            }
+            else {
+                $("#wait-text").text("opponent is waiting for you")
+            }
+        } else {
+            reset = true;
         }
     }
 })
@@ -80,7 +91,8 @@ $("#signin").on("submit", function (e) {
         player1.set({
             assigned: true,
             name: localPlayer.name,
-            currentChoice: ""
+            currentChoice: "",
+            reset: true
         })
         localPlayer.playerNumber = 1;
         createChoices()
@@ -96,7 +108,8 @@ $("#signin").on("submit", function (e) {
         player2.set({
             name: localPlayer.name,
             currentChoice: "",
-            assigned: true
+            assigned: true,
+            reset: true
         })
         localPlayer.playerNumber = 2;
         createChoices()
@@ -116,6 +129,7 @@ $("#signin").on("submit", function (e) {
 
 // make a function that compares answers
 function compareAnswers() {
+    if(reset)
     if (localPlayer.currentChoice !== "") {
         if (localPlayer.currentChoice === 0 && opponentChoice === 2) {
             win()
@@ -129,6 +143,7 @@ function compareAnswers() {
             lose()
         }
         localPlayer.currentChoice = "";
+        reset = false;
     }
 }
 function win() {
