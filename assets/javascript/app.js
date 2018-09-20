@@ -54,6 +54,7 @@ player1.on("value", function (s) {
         if(reset){
             if (localPlayer.currentChoice !== "") {
                 compareAnswers();
+                $("#wait-text").text("")
             }
             else {
                 $("#wait-text").text("opponent is waiting for you")
@@ -71,11 +72,13 @@ player2.on("value", function (s) {
         if(reset){
             if (localPlayer.currentChoice !== "") {
                 compareAnswers();
+                $("#wait-text").text("")
             }
             else {
                 $("#wait-text").text("opponent is waiting for you")
             }
         } else {
+            console.log("resetting");
             reset = true;
         }
     }
