@@ -1,9 +1,18 @@
 #r{
     background: red;
+    border: darkred;
+    border-style: solid;
+    border-width: 1px;
 }
 #p{
     background: skyblue;
+    border: darkblue;
+    border-style: solid;
+    border-width: 1px;
 }
 #s{
     background:yellow;
+    border: goldenrod;
+    border-style: solid;
+    border-width: 1px;
 }
