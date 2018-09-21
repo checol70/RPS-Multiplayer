@@ -30,7 +30,8 @@ var player1AssignedRef = db.ref("/players/player1/assigned")
 var player2AssignedRef = db.ref("/players/player2/assigned")
 var presenceRef
 var choices = ["r", "p", "s"]
-var opponentChoice = ""
+var opponentChoice = "";
+var images =["Rock.png", "Paper.png", "Scissors.png"]
 
 // this will store the local player variable.  it will include a password, username, total wins, total losses and something else, probably(at least all of that on the server, probably have current wins and losses with that too)
 var localPlayer = {
@@ -202,7 +203,7 @@ function reset() {
 
 function createChoices() {
     choices.forEach(function (e, i) {
-        var p = $("<p>").addClass("choice col-4 text-center ").attr("data-choice", i).text(e).attr("id", e)
+        var p = $("<img>").addClass("choice col-4 text-center ").attr("data-choice", i).attr("src", "assets/images/"+images[i]).text(e).attr("id", e)
         $("#choices").append(p);
     });
 }
